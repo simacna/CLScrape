@@ -18,12 +18,37 @@ def parse_source(html, encoding='utf-8'):
     parsed = BeautifulSoup(html, from_encoding=encoding)
     return parsed
 
+def extract_listings(parsed): 
+    """Returning a list of individual listings
+    """
+    listings = parsed.find_all('p', class_='row') #find_all is a beautifulsoup method
+    extracted = []
+    for listing in listings:
+        link = listing.find('span', class_='pl').find('a')
+        this_listing = {
+            'description': link.string.strip()
+        }
+        extracted.append(this_listing)
+    return extracted
+
+
 if __name__ == '__main__':
     if len(sys.argv) > 1 and sys.argv[1] == 'test': #sys.argv[1] is first argument after the script
         html, encoding = read_search_results()
     else:
         html, encoding = fetch_search_results(
-            minAsk=500, maxAsk=1000, bedrooms=2
+            minAsk=1500, maxAsk=6000, bedrooms=2
         )
     doc = parse_source(html, encoding)
-    print doc.prettify(encoding=encoding)
+    listings = extract_listings(doc)
+    print len(listings)
+    #print doc.prettify(encoding=encoding)
+
+
+
+
+
+
+
+
+
