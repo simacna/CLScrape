@@ -4,7 +4,7 @@ import sys
 
 def fetch_search_results(query=None, minAsk=None, maxAsk=None, bedrooms=None):
     search_params = {
-        key: val for key, val in locals().items() if val is not None #locals() returns dictionary of current namespace
+        key: val for key, val in locals().items() if val is not None #locals() returns dictionary of current namespaces
     }
     if not search_params:
         raise ValueError("No valid keywords")
