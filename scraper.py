@@ -19,7 +19,7 @@ def parse_source(html, encoding='utf-8'):
     return parsed
 
 if __name__ == '__main__':
-    if len(sys.argv) > 1 and sys.argv[1] == 'test':
+    if len(sys.argv) > 1 and sys.argv[1] == 'test': #sys.argv[1] is first argument after the script
         html, encoding = read_search_results()
     else:
         html, encoding = fetch_search_results(
