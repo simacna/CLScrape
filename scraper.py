@@ -1,4 +1,4 @@
-import requests
+import requests, pprint
 from bs4 import BeautifulSoup
 import sys
 
@@ -21,11 +21,15 @@ def parse_source(html, encoding='utf-8'):
 def extract_listings(parsed): 
     """Returning a list of individual listings
     """
+    #location_attrs = {'data-latitude': True, 'data-longitude': True} --- CL no longer has attrs lat/long
     listings = parsed.find_all('p', class_='row') #find_all is a beautifulsoup method
     extracted = []
     for listing in listings:
+        #location = {key: listing.attrs.get(key, '') for key in location_attrs}
         link = listing.find('span', class_='pl').find('a')
         this_listing = {
+            #'location': location,
+            'link': link.attrs['href'],
             'description': link.string.strip()
         }
         extracted.append(this_listing)
@@ -42,6 +46,8 @@ if __name__ == '__main__':
     doc = parse_source(html, encoding)
     listings = extract_listings(doc)
     print len(listings)
+    print listings
+    #pprint.pprint(listings)
     #print doc.prettify(encoding=encoding)
 
 
